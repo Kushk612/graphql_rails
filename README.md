@@ -38,28 +38,28 @@ link to setup the graphql:
 * bundle add graphiql-rails
 * bundle install
 
-* # config/routes.rb
-`Rails.application.routes.draw do
+# config/routes.rb
+```Rails.application.routes.draw do
  if Rails.env.development?
    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
  end
  post "/graphql", to: "graphql#execute"
-end`
+end```
 
-* config/initializers/graphiql.rb
-`GraphiQL::Rails.config.header_editor_enabled = true`
+# config/initializers/graphiql.rb
+```GraphiQL::Rails.config.header_editor_enabled = true```
 
-* app/assets/config/manifest.js
-`//= link graphiql/rails/application.js`
-`//= link graphiql/rails/application.css`
+# app/assets/config/manifest.js
+```//= link graphiql/rails/application.js```
+```//= link graphiql/rails/application.css```
 
 
-* Generate the type for the airline and review
-`rails g graphql:object Airline`
-`rails g graphql:object review`
+# Generate the type for the airline and review
+```rails g graphql:object Airline```
+```rails g graphql:object review```
 
-* app/graphql/types/airline_type.rb
-`# frozen_string_literal: true
+# app/graphql/types/airline_type.rb
+```# frozen_string_literal: true
 
 module Types
   class AirlineType < Types::BaseObject
@@ -72,10 +72,10 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
     field :reviews, [Types::ReviewType], null: true
   end
-end`
+end```
 
-* app/graphql/types/review_type.rb:
-`# frozen_string_literal: true
+# app/graphql/types/review_type.rb:
+```# frozen_string_literal: true
 
 module Types
  class ReviewType < Types::BaseObject
@@ -87,17 +87,17 @@ module Types
    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
    field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
  end
-end`
+end```
 
-* app/graphql/types/query_type.rb:
- # fetch all the records of the arirline table
-  `field :airlines, [Types::AirlineType], null: false, description: 'returns all the records of the airlines'
+# app/graphql/types/query_type.rb:
+ ## fetch all the records of the arirline table
+  ```field :airlines, [Types::AirlineType], null: false, description: 'returns all the records of the airlines'
    def airlines
      Airline.all
-   end`
+   end```
   
-  `field :reviews, [Types::ReviewType], null: false, description: 'returns all the records of the Review'
+  ```field :reviews, [Types::ReviewType], null: false, description: 'returns all the records of the Review'
    def reviews
      Review.all
-   end`
+   end```
 
